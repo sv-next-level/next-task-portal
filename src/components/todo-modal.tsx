@@ -38,15 +38,22 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 
-export default function Home() {
+interface TodoModalProps {
+  id: string;
+  title: string;
+  description: string;
+  expiry: Date;
+}
+
+export default function TodoModal(props: Readonly<TodoModalProps>) {
   const [openDialog, setOpenDialog] = useState<boolean | undefined>(undefined);
 
   const form = useForm<z.infer<typeof todoSchema>>({
     resolver: zodResolver(todoSchema),
     defaultValues: {
-      title: undefined,
-      description: undefined,
-      expiry: undefined,
+      title: props.title,
+      description: props.description,
+      expiry: props.expiry,
     },
   });
 
