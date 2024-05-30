@@ -41,12 +41,10 @@ interface TodoModalProps {
   todo: Todo | undefined;
   setOpen: (open: boolean | undefined) => void;
   setTodo: (todo: Todo | undefined) => void;
-  onConfirm: () => void;
+  onConfirm: (todo: Todo) => void;
 }
 
 export default function TodoModal(props: TodoModalProps) {
-  console.log("🚀 ~ TodoModal ~ props:", props);
-
   const form = useForm<z.infer<typeof todoSchema>>({
     resolver: zodResolver(todoSchema),
     defaultValues: {
@@ -57,15 +55,14 @@ export default function TodoModal(props: TodoModalProps) {
   });
 
   const onSubmit = (values: z.infer<typeof todoSchema>) => {
-    props.setOpen(undefined);
-
-    props.setTodo({
+    const todo: Todo = {
       ...props.todo,
       title: values.title,
       description: values.description,
       expiry: String(values.expiry),
-    });
-    props.onConfirm();
+    };
+    props.onConfirm(todo);
+    props.setOpen(undefined);
   };
 
   return (

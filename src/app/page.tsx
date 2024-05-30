@@ -64,11 +64,30 @@ export default function Home() {
     setTodo(undefined);
   };
 
-  const upsertTodo = () => {
+  const upsertTodo = (todo: Todo) => {
     if (todo?.id) {
       // update todo
+      setTodoList((prev) => {
+        const updatedTodoList = prev.map((prevTodo: Todo) => {
+          if (prevTodo.id === todo.id) {
+            return todo;
+          }
+          return prevTodo;
+        });
+        return updatedTodoList;
+      });
     } else {
       // add todo
+      setTodoList((prev) => {
+        return [
+          ...prev,
+          {
+            ...todo,
+            done: false,
+            id: todo.title,
+          },
+        ];
+      });
     }
 
     setTodo(undefined);
@@ -77,14 +96,16 @@ export default function Home() {
   return (
     <>
       <div className="absolute bottom-4 left-4 ">
-        <Button
-          size="icon"
-          variant="outline"
-          onClick={() => setOpenModal(true)}
-          className="size-14 rounded-full"
-        >
-          <PlusIcon className="size-6" />
-        </Button>
+        {!openModal && !openAlert ? (
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => setOpenModal(true)}
+            className="size-14 rounded-full"
+          >
+            <PlusIcon className="size-6" />
+          </Button>
+        ) : null}
         {openModal ? (
           <TodoModal
             open={openModal}
