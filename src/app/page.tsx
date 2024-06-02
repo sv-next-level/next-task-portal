@@ -163,18 +163,16 @@ export default function Home() {
       ) : null}
 
       <div className="fixed bottom-4 left-4">
-        {!openModal && !openAlert ? (
-          <Button
-            size="icon"
-            onClick={() => {
-              setTodoNumber(-1);
-              setOpenModal(true);
-            }}
-            className="size-14 rounded-full"
-          >
-            <PlusIcon className="size-6" />
-          </Button>
-        ) : null}
+        <Button
+          size="icon"
+          onClick={() => {
+            setTodoNumber(-1);
+            setOpenModal(true);
+          }}
+          className="size-14 rounded-full"
+        >
+          <PlusIcon className="size-6" />
+        </Button>
       </div>
 
       <div className="m-10">

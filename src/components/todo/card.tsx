@@ -55,12 +55,12 @@ export default function TodoCard(props: Readonly<TodoCardProps>) {
       </CardFooter>
       {!props.todo.done ? (
         <div
-          className="cursor-pointer"
+          className="cursor-pointer pb-4"
           onClick={() => {
             props.onUpdate(props.index);
           }}
         >
-          <CardContent className="max-h-[100px] overflow-auto pb-4 text-sm">
+          <CardContent className="max-h-[100px] overflow-auto py-0 text-sm">
             {props.todo.description}
           </CardContent>
         </div>
