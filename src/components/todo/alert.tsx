@@ -12,9 +12,10 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface TodoAlertProps {
+  todoId: string;
   open: boolean | undefined;
   setOpen: (open: boolean | undefined) => void;
-  onConfirm: () => void;
+  onConfirm: (todoId: string) => void;
 }
 
 export default function TodoAlert(props: TodoAlertProps) {
@@ -39,7 +40,7 @@ export default function TodoAlert(props: TodoAlertProps) {
           <AlertDialogAction
             onClick={() => {
               props.setOpen(undefined);
-              props.onConfirm();
+              props.onConfirm(props.todoId);
             }}
           >
             Continue

@@ -1,73 +1,69 @@
 "use client";
 
 import { format } from "date-fns";
+import { TrashIcon } from "@radix-ui/react-icons";
 
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { Todo } from "@/interface/todo";
 import { Button } from "@/components/ui/button";
 
 interface TodoCardProps {
   todo: Todo;
-  onDone: (id: string) => void;
-  onUpdate: (todo: Todo) => void;
-  onDelete: (todo: Todo) => void;
+  index: number;
+  onDone: (index: number) => void;
+  onUpdate: (index: number) => void;
+  onDelete: (index: number) => void;
 }
 
 export default function TodoCard(props: Readonly<TodoCardProps>) {
   return (
-    <Card className={`${props.todo.done && "bg-white-500"} my-4 w-[350px]`}>
-      <div
-        onClick={() => {
-          props.onDone(String(props.todo.id));
-        }}
-        className="cursor-pointer"
-      >
-        {props.todo.done ? (
-          <CardHeader>
-            <CardTitle className={`${props.todo.done && "line-through"}`}>
-              {props.todo.title}
-            </CardTitle>
-          </CardHeader>
-        ) : (
-          <>
-            <CardHeader>
-              <CardTitle>{props.todo.title}</CardTitle>
-              <CardDescription>
-                {format(props.todo.expiry, "PPP")}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm">
-              {props.todo.description}
-            </CardContent>
-          </>
-        )}
-      </div>
-
+    <Card className={`${props.todo.done && "bg-white-500"} my-4`}>
+      <CardFooter className="flex justify-between py-4">
+        <div
+          onClick={() => {
+            props.onDone(props.index);
+          }}
+          className="w-full cursor-pointer"
+        >
+          <CardTitle className={`${props.todo.done && "line-through"}`}>
+            {props.todo.title}
+          </CardTitle>
+          <CardDescription
+            className={cn(
+              props.todo.expiry < new Date().getTime() && "text-destructive"
+            )}
+          >
+            {format(props.todo.expiry, "PPP")}
+          </CardDescription>
+        </div>
+        <Button
+          variant="secondary"
+          className="z-50 hover:bg-destructive hover:text-accent"
+          onClick={() => {
+            props.onDelete(props.index);
+          }}
+        >
+          <TrashIcon />
+        </Button>
+      </CardFooter>
       {!props.todo.done ? (
-        <CardFooter className="flex justify-between">
-          <Button
-            variant="outline"
-            onClick={() => {
-              props.onDelete(props.todo);
-            }}
-          >
-            Delete
-          </Button>
-          <Button
-            onClick={() => {
-              props.onUpdate(props.todo);
-            }}
-          >
-            Update
-          </Button>
-        </CardFooter>
+        <div
+          className="cursor-pointer"
+          onClick={() => {
+            props.onUpdate(props.index);
+          }}
+        >
+          <CardContent className="max-h-[100px] overflow-auto pb-4 text-sm">
+            {props.todo.description}
+          </CardContent>
+        </div>
       ) : null}
     </Card>
   );

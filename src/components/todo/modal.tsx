@@ -37,10 +37,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Calendar } from "@/components/ui/calendar";
 
 interface TodoModalProps {
-  open: boolean | undefined;
   todo: Todo | undefined;
+  open: boolean | undefined;
   setOpen: (open: boolean | undefined) => void;
-  setTodo: (todo: Todo | undefined) => void;
   onConfirm: (todo: Todo) => void;
 }
 
@@ -59,7 +58,7 @@ export default function TodoModal(props: TodoModalProps) {
       ...props.todo,
       title: values.title,
       description: values.description,
-      expiry: String(values.expiry),
+      expiry: values.expiry.getTime(),
     };
     props.onConfirm(todo);
     props.setOpen(undefined);
@@ -139,7 +138,6 @@ export default function TodoModal(props: TodoModalProps) {
                               mode="single"
                               selected={field.value}
                               onSelect={field.onChange}
-                              disabled={(date) => date > new Date()}
                               initialFocus
                             />
                           </PopoverContent>
@@ -158,7 +156,7 @@ export default function TodoModal(props: TodoModalProps) {
                   variant="secondary"
                   onClick={() => {
                     props.setOpen(undefined);
-                    props.setTodo(undefined);
+                    // props.setTodo(undefined);
                   }}
                 >
                   Close

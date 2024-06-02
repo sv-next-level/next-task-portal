@@ -1,7 +1,7 @@
 export interface Todo {
-  id?: string;
+  _id?: string;
   title: string;
-  description: string;
-  expiry: string;
+  expiry: number;
   done?: boolean;
+  description: string;
 }
