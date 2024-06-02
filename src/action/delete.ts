@@ -1,9 +1,11 @@
 import axios from "axios";
 
+import { URL } from "@/config/env";
+
 export async function deleteTodo(data: any) {
   try {
     const method: string = "DELETE";
-    const url: string = "http://localhost:3001/";
+    const url: string = URL.GATEWAY;
     const headers = {
       "Content-Type": "application/json",
     };
