@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: false,
   env: {
-    API_GATEWAY: process.env.API_GATEWAY,
+    BASE_URL: process.env.APP_BASE_URL,
   },
 };
 

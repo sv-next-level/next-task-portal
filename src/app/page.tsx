@@ -1,19 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { PlusIcon } from "@radix-ui/react-icons";
 
-import { Todo } from "@/interface/todo";
-import { getTodos } from "@/action/get";
-import { upsertTodo } from "@/action/upsert";
-import { deleteTodo } from "@/action/delete";
+import { PlusIcon } from "@/nextjs/assets";
+
+import { Button } from "@/nextjs/components/ui/button";
+import { Toaster } from "@/nextjs/components/ui/toaster";
+import { useToast } from "@/nextjs/components/ui/use-toast";
+
+import TodoAlert from "@/components/todo/alert";
 import TodoCard from "@/components/todo/card";
 import TodoModal from "@/components/todo/modal";
-import TodoAlert from "@/components/todo/alert";
-import { Button } from "@/components/ui/button";
 import TodoToast from "@/components/todo/toast";
-import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/components/ui/use-toast";
+
+import { deleteTodo } from "@/action/delete";
+import { getTodos } from "@/action/get";
+import { upsertTodo } from "@/action/upsert";
+import { Todo } from "@/interface/todo";
 
 export default function Home() {
   const { toast } = useToast();

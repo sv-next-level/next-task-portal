@@ -18,7 +18,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/common/*": ["./src/shared/common/ts/*"],
+      "@/nextjs/*": ["./src/shared/nextjs/src/*"]
     }
   },
   "include": [

@@ -1,11 +1,24 @@
 "use client";
 
-import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
+import { CalendarIcon } from "@/nextjs/assets";
+import { cn } from "@/nextjs/lib/utils";
+
+import { Button } from "@/nextjs/components/ui/button";
+import { Calendar } from "@/nextjs/components/ui/calendar";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/nextjs/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -13,28 +26,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import {
-  Dialog,
-  DialogContent,
-  DialogClose,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+} from "@/nextjs/components/ui/form";
+import { Input } from "@/nextjs/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
+} from "@/nextjs/components/ui/popover";
+import { Textarea } from "@/nextjs/components/ui/textarea";
+
 import { Todo } from "@/interface/todo";
 import { todoSchema } from "@/schema/todo";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Calendar } from "@/components/ui/calendar";
 
 interface TodoModalProps {
   todo: Todo | undefined;
@@ -121,7 +123,7 @@ export default function TodoModal(props: TodoModalProps) {
                                 variant="outline"
                                 className={cn(
                                   "pl-3 text-left font-normal",
-                                  !field.value && "text-muted-foreground"
+                                  !field.value && "text-muted-foreground",
                                 )}
                               >
                                 {field.value ? (
@@ -129,7 +131,7 @@ export default function TodoModal(props: TodoModalProps) {
                                 ) : (
                                   <span>pick a expiry date</span>
                                 )}
-                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                <CalendarIcon className="ml-auto size-4 opacity-50" />
                               </Button>
                             </FormControl>
                           </PopoverTrigger>

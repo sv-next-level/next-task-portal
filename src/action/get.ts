@@ -1,11 +1,11 @@
 import axios from "axios";
 
-import { URL } from "@/config/env";
+import { envConfig } from "@/config/env";
 
 export async function getTodos() {
   try {
     const method: string = "GET";
-    const url: string = URL.GATEWAY;
+    const url: string = envConfig.BASE_URL;
     const headers = {
       "Content-Type": "application/json",
     };

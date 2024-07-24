@@ -1,18 +1,20 @@
 "use client";
 
 import { format } from "date-fns";
-import { TrashIcon } from "@radix-ui/react-icons";
 
+import { TrashIcon } from "@/nextjs/assets";
+import { cn } from "@/nextjs/lib/utils";
+
+import { Button } from "@/nextjs/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardTitle,
-} from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+} from "@/nextjs/components/ui/card";
+
 import { Todo } from "@/interface/todo";
-import { Button } from "@/components/ui/button";
 
 interface TodoCardProps {
   todo: Todo;
@@ -24,7 +26,7 @@ interface TodoCardProps {
 
 export default function TodoCard(props: Readonly<TodoCardProps>) {
   return (
-    <Card className={`${props.todo.done && "bg-white-500"} my-4`}>
+    <Card className={`${props.todo.done && "bg-white"} my-4`}>
       <CardFooter className="flex justify-between py-4">
         <div
           onClick={() => {
@@ -37,7 +39,7 @@ export default function TodoCard(props: Readonly<TodoCardProps>) {
           </CardTitle>
           <CardDescription
             className={cn(
-              props.todo.expiry < new Date().getTime() && "text-destructive"
+              props.todo.expiry < new Date().getTime() && "text-destructive",
             )}
           >
             {format(props.todo.expiry, "PPP")}
