@@ -1,0 +1,6 @@
+[submodule "src/shared/nextjs"]
+	path = src/shared/nextjs
+	url = git@github.com:sv-next-level/next-util-nextjs.git
+[submodule "src/shared/common"]
+	path = src/shared/common
+	url = git@github.com:sv-next-level/next-util-common.git
