@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next Charts",
-  description: "Next level charts for better analysis and trading.",
+  name: "Next Todo",
+  description: "Next level Todo list to manage day-to-day tasks.",
   mainNav: [
     {
       title: "Home",
