@@ -1,71 +1,72 @@
 import {
   ChevronDownIcon,
-  ChevronRightIcon,
+  ChevronsDownIcon,
+  ChevronsUpIcon,
   ChevronUpIcon,
   CircleCheckIcon,
   CircleCrossIcon,
   CircleIcon,
   CircleQuestionIcon,
   CircleStopwatchIcon,
+  EqualIcon,
 } from "@/nextjs/assets";
 
-export const labels = [
-  {
-    value: "bug",
-    label: "Bug",
-  },
-  {
-    value: "feature",
-    label: "Feature",
-  },
-  {
-    value: "documentation",
-    label: "Documentation",
-  },
-];
+import { title } from "@/common/functions";
+
+import { PRIORITIES, STATUS } from "@/functions";
 
 export const statuses = [
   {
-    value: "backlog",
-    label: "Backlog",
+    label: title(STATUS.BACKLOG),
+    value: STATUS.BACKLOG,
     icon: CircleQuestionIcon,
   },
   {
-    value: "todo",
-    label: "Todo",
+    label: title(STATUS.TODO),
+    value: STATUS.TODO,
     icon: CircleIcon,
   },
   {
-    value: "in progress",
-    label: "In Progress",
+    label: title(STATUS.IN_PROGRESS),
+    value: STATUS.IN_PROGRESS,
     icon: CircleStopwatchIcon,
   },
   {
-    value: "done",
-    label: "Done",
+    label: title(STATUS.DONE),
+    value: STATUS.DONE,
     icon: CircleCheckIcon,
   },
   {
-    value: "canceled",
-    label: "Canceled",
+    label: title(STATUS.CANCELED),
+    value: STATUS.CANCELED,
     icon: CircleCrossIcon,
   },
 ];
 
 export const priorities = [
   {
-    label: "Low",
-    value: "low",
+    label: title(PRIORITIES.HIGHEST),
+    value: PRIORITIES.HIGHEST,
+    icon: ChevronsUpIcon,
+  },
+  {
+    label: title(PRIORITIES.HIGH),
+    value: PRIORITIES.HIGH,
+    icon: ChevronUpIcon,
+  },
+  {
+    label: title(PRIORITIES.MEDIUM),
+    value: PRIORITIES.MEDIUM,
+    icon: EqualIcon,
+  },
+  {
+    label: title(PRIORITIES.LOW),
+    value: PRIORITIES.LOW,
     icon: ChevronDownIcon,
   },
   {
-    label: "Medium",
-    value: "medium",
-    icon: ChevronRightIcon,
-  },
-  {
-    label: "High",
-    value: "high",
-    icon: ChevronUpIcon,
+    label: title(PRIORITIES.LOWEST),
+    value: PRIORITIES.LOWEST,
+    icon: ChevronsDownIcon,
   },
 ];

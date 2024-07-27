@@ -3,13 +3,18 @@
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
 
-import { Badge } from "@/nextjs/components/ui/badge";
+import { ChevronDownIcon, ChevronRightIcon } from "@/nextjs/assets";
+import { cn } from "@/nextjs/lib/utils";
+
 import { Checkbox } from "@/nextjs/components/ui/checkbox";
 
-import { labels, priorities, statuses } from "../data/data";
-import { Task } from "../data/schema";
-import { DataTableColumnHeader } from "./data-table-column-header";
-import { DataTableRowActions } from "./data-table-row-actions";
+import { DataTableColumnHeader } from "@/components/data-table-column-header";
+import { DataTableRowActions } from "@/components/data-table-row-actions";
+
+import { priorities, statuses } from "@/data/data";
+import { Task } from "@/data/schema";
+import { getPriorityColor, getStatusColor } from "@/functions";
+import { Button } from "@/shared/nextjs/src/components/ui/button";
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -39,13 +44,23 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Task" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("id")}</div>,
-    enableSorting: false,
-    enableHiding: false,
+    id: "expander",
+    header: () => null,
+    cell: ({ row }) => {
+      return row.getCanExpand() ? (
+        <Button
+          onClick={() => row.getToggleExpandedHandler()}
+          className="p-0 hover:bg-inherit"
+          variant="ghost"
+        >
+          {row.getIsExpanded() ? (
+            <ChevronDownIcon className="size-4" />
+          ) : (
+            <ChevronRightIcon className="size-4" />
+          )}
+        </Button>
+      ) : null;
+    },
   },
   {
     accessorKey: "title",
@@ -53,13 +68,8 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader column={column} title="Title" />
     ),
     cell: ({ row }) => {
-      const label = labels.find(
-        (label: any) => label.value === row.original.label,
-      );
-
       return (
         <div className="flex space-x-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
           <span className="max-w-[500px] truncate font-medium">
             {row.getValue("title")}
           </span>
@@ -84,7 +94,9 @@ export const columns: ColumnDef<Task>[] = [
       return (
         <div className="flex w-[100px] items-center">
           {status.icon && (
-            <status.icon className="mr-2 size-4 text-muted-foreground" />
+            <status.icon
+              className={cn("mr-2 size-4", getStatusColor(status.value))}
+            />
           )}
           <span>{status.label}</span>
         </div>
@@ -112,7 +124,9 @@ export const columns: ColumnDef<Task>[] = [
       return (
         <div className="flex items-center">
           {priority.icon && (
-            <priority.icon className="mr-2 size-4 text-muted-foreground" />
+            <priority.icon
+              className={cn("mr-2 size-4", getPriorityColor(priority.value))}
+            />
           )}
           <span>{priority.label}</span>
         </div>
@@ -122,6 +136,24 @@ export const columns: ColumnDef<Task>[] = [
       return value.includes(row.getValue(id));
     },
     // accessorFn: row => row.priority,
+  },
+  {
+    accessorKey: "due",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Due Date" />
+    ),
+    // cell: info => info.getValue(),
+    cell: ({ row }) => {
+      const date: string = new Date(row.getValue("due")).toLocaleDateString();
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[500px] truncate font-medium">{date}</span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
+    },
   },
   {
     id: "actions",

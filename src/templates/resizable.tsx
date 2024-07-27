@@ -15,14 +15,14 @@ import {
 } from "@/nextjs/components/ui/resizable";
 
 import { columns } from "@/components/columns";
+import { DataTable } from "@/components/data-table";
 import { DataTableToolbar } from "@/components/data-table-toolbar";
 import { Accounts } from "@/nextjs/components/accounts";
 import { Apps } from "@/nextjs/components/apps";
-import { DataTable } from "@/nextjs/components/data-table/data-table";
 import { Settings } from "@/nextjs/components/settings";
 import { Themes } from "@/nextjs/components/themes";
 
-import * as tasks from "@/data/tasks.json";
+import { tasks } from "@/data/tasks";
 
 interface ResizableProps {
   top: number;

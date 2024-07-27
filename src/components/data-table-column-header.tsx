@@ -47,7 +47,7 @@ export function DataTableColumnHeader<TData, TValue>({
             ) : column.getIsSorted() === "asc" ? (
               <ChevronUpIcon className="ml-2 size-4" />
             ) : (
-              <ChevronUpDownIcon className="ml-2 size-4" />
+              <ChevronUpDownIcon className="ml-2 size-3" />
             )}
           </Button>
         </DropdownMenuTrigger>
