@@ -22,11 +22,10 @@ import { Apps } from "@/nextjs/components/apps";
 import { Settings } from "@/nextjs/components/settings";
 import { Themes } from "@/nextjs/components/themes";
 
-import { tasks } from "@/data/tasks";
-
 interface ResizableProps {
   top: number;
 }
+
 export function Resizable(props: ResizableProps) {
   const { height, width } = useScreenSize();
 
@@ -64,7 +63,6 @@ export function Resizable(props: ResizableProps) {
           <ResizablePanel defaultSize={100 - top} className="relative">
             <div className={cn("h-screen overflow-scroll p-4 pb-24")}>
               <DataTable
-                data={tasks}
                 columns={columns}
                 DataTableToolbar={DataTableToolbar}
                 pageSizes={[10, 12, 14, 16, 18, 20]}

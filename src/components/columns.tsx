@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { ChevronDownIcon, ChevronRightIcon } from "@/nextjs/assets";
 import { cn } from "@/nextjs/lib/utils";
 
+import { Button } from "@/nextjs/components/ui/button";
 import { Checkbox } from "@/nextjs/components/ui/checkbox";
 
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
@@ -15,7 +16,6 @@ import { DataTableRowActions } from "@/components/data-table-row-actions";
 import { priorities, statuses } from "@/data/data";
 import { Task } from "@/data/schema";
 import { getPriorityColor, getStatusColor } from "@/functions";
-import { Button } from "@/shared/nextjs/src/components/ui/button";
 
 export const columns: ColumnDef<Task>[] = [
   {
