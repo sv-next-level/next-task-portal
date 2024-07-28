@@ -30,19 +30,20 @@ import {
 
 import { DataTablePagination } from "@/nextjs/components/data-table/data-table-pagination";
 
+import { Task } from "@/data/schema";
 import { tasks } from "@/data/tasks";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps {
+  columns: ColumnDef<Task>[];
   DataTableToolbar?: React.ElementType;
   pageSizes?: number[];
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable({
   columns,
   DataTableToolbar,
   pageSizes = [10, 20, 30, 40, 50],
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps) {
   const { data } = useQuery({
     queryKey: ["tasks"],
     queryFn: getTasks,
