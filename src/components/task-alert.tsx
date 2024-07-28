@@ -21,12 +21,14 @@ export function TaskAlert(props: DeleteTaskProps) {
     <AlertDialogResponsive open={props.open} onOpenChange={props.setOpen}>
       <AlertDialogResponsiveContent>
         <AlertDialogResponsiveHeader>
-          <AlertDialogResponsiveTitle>
+          <AlertDialogResponsiveTitle className="mb-3 md:mb-0">
             Are you absolutely sure?
           </AlertDialogResponsiveTitle>
-          <AlertDialogResponsiveDescription>
-            This action cannot be undone. This will permanently delete task from
-            our servers.
+          <AlertDialogResponsiveDescription className="max-h-96 overflow-scroll">
+            <p className="flex text-left">
+              This action cannot be undone. This will permanently delete task
+              from our servers.
+            </p>
           </AlertDialogResponsiveDescription>
         </AlertDialogResponsiveHeader>
         <AlertDialogResponsiveFooter>

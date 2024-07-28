@@ -82,15 +82,17 @@ export function TaskModal(props: TaskModalProps) {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="md:space-y-6">
             <DialogResponsiveHeader>
-              <DialogResponsiveTitle>Task</DialogResponsiveTitle>
-              <DialogResponsiveDescription className="max-h-96 overflow-scroll p-px pt-3">
+              <DialogResponsiveTitle className="mb-3">
+                Task
+              </DialogResponsiveTitle>
+              <DialogResponsiveDescription className="max-h-96 overflow-y-auto p-px">
                 <div className="space-y-4">
                   <FormField
                     control={form.control}
                     name="title"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Title</FormLabel>
+                        <FormLabel className="flex text-left">Title</FormLabel>
                         <FormControl>
                           <Input
                             {...field}
@@ -108,7 +110,9 @@ export function TaskModal(props: TaskModalProps) {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Description</FormLabel>
+                        <FormLabel className="flex text-left">
+                          Description
+                        </FormLabel>
                         <FormControl>
                           <Textarea
                             {...field}
@@ -125,7 +129,9 @@ export function TaskModal(props: TaskModalProps) {
                     name="priority"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Priority</FormLabel>
+                        <FormLabel className="flex text-left">
+                          Priority
+                        </FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -154,7 +160,9 @@ export function TaskModal(props: TaskModalProps) {
                     name="due"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Due Date</FormLabel>
+                        <FormLabel className="flex text-left">
+                          Due Date
+                        </FormLabel>
                         <Popover>
                           <PopoverTrigger asChild>
                             <FormControl>
