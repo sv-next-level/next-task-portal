@@ -115,7 +115,7 @@ export function DataTableRowActions<TData>({
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-        <TaskModal task={task} />
+        <TaskModal task={task} setOpen={setOpenEdit} />
         <DeleteTask open={openDelete} setOpen={setOpenDelete} />
       </AlertDialog>
     </DialogResponsive>

@@ -33,7 +33,11 @@ export function DeleteTask(props: DeleteTaskProps) {
           <AlertDialogResponsiveClose asChild>
             <Button variant="outline">Cancel</Button>
           </AlertDialogResponsiveClose>
-          <Button variant={"destructive"} type="submit">
+          <Button
+            type="submit"
+            variant={"destructive"}
+            onClick={() => props.setOpen(false)}
+          >
             Delete
           </Button>
         </AlertDialogResponsiveFooter>

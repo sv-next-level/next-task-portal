@@ -1,6 +1,3 @@
-"use client";
-
-// import { Table } from "@tanstack/react-table";
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -51,6 +48,7 @@ import { taskSchema } from "@/data/schema";
 import { PRIORITIES } from "@/functions";
 
 interface TaskModalProps {
+  setOpen: (open: boolean) => void;
   task?: z.infer<typeof taskSchema>;
 }
 
@@ -73,8 +71,9 @@ export function TaskModal(props: TaskModalProps) {
       description: values.description,
       due: new Date(values.due).getTime(),
     };
-    // props.onConfirm(todo);
-    // props.setOpen(undefined);
+
+    console.log("🚀 ~ onSubmit ~ task:", task);
+    props.setOpen(false);
   };
 
   return (
@@ -169,7 +168,7 @@ export function TaskModal(props: TaskModalProps) {
                                 {field.value ? (
                                   format(field.value, "PPP")
                                 ) : (
-                                  <span>pick a expiry date</span>
+                                  <span>pick a due date</span>
                                 )}
                                 <CalendarIcon className="ml-auto size-4 opacity-50" />
                               </Button>
@@ -179,7 +178,9 @@ export function TaskModal(props: TaskModalProps) {
                             <Calendar
                               mode="single"
                               selected={new Date(field.value)}
-                              onSelect={field.onChange}
+                              onSelect={(date) => {
+                                field.onChange(date?.getTime());
+                              }}
                               initialFocus
                             />
                           </PopoverContent>

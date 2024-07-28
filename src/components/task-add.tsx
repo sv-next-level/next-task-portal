@@ -23,7 +23,7 @@ export function AddTask() {
           Add
         </Button>
       </DialogResponsiveTrigger>
-      <TaskModal />
+      <TaskModal setOpen={setOpen} />
     </DialogResponsive>
   );
 }

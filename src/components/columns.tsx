@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 
 import { ChevronDownIcon, ChevronRightIcon } from "@/nextjs/assets";
 import { cn } from "@/nextjs/lib/utils";
@@ -144,10 +145,10 @@ export const columns: ColumnDef<Task>[] = [
     ),
     // cell: info => info.getValue(),
     cell: ({ row }) => {
-      const date: string = new Date(row.getValue("due")).toLocaleDateString();
+      const date: string = format(row.getValue("due"), "PPP");
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[500px] truncate font-medium">{date}</span>
+          <span className="max-w-[200px] truncate font-medium">{date}</span>
         </div>
       );
     },
