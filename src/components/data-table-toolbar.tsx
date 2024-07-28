@@ -8,6 +8,7 @@ import { Button } from "@/nextjs/components/ui/button";
 import { Input } from "@/nextjs/components/ui/input";
 
 import { AddTask } from "@/components/task-add";
+import { DeleteTask } from "@/components/task-delete";
 import { DataTableFacetedFilter } from "@/nextjs/components/data-table/data-table-faceted-filter";
 import { DataTableViewOptions } from "@/nextjs/components/data-table/data-table-view-options";
 
@@ -21,6 +22,7 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const selectedRows = table.getFilteredSelectedRowModel().rows;
 
   return (
     <div className="flex items-center overflow-x-scroll p-px">
@@ -58,6 +60,7 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
         <div className="flex flex-1 justify-end space-x-2">
+          {selectedRows.length > 0 && <DeleteTask selected={selectedRows} />}
           <AddTask />
           <DataTableViewOptions table={table} />
         </div>

@@ -26,7 +26,7 @@ import {
   DropdownMenuTrigger,
 } from "@/nextjs/components/ui/dropdown-menu";
 
-import { DeleteTask } from "@/components/task-delete";
+import { TaskAlert } from "@/components/task-alert";
 import { TaskModal } from "@/components/task-modal";
 
 import { priorities, statuses } from "@/data/data";
@@ -116,7 +116,7 @@ export function DataTableRowActions<TData>({
           </DropdownMenuContent>
         </DropdownMenu>
         <TaskModal task={task} setOpen={setOpenEdit} />
-        <DeleteTask open={openDelete} setOpen={setOpenDelete} />
+        <TaskAlert open={openDelete} setOpen={setOpenDelete} />
       </AlertDialog>
     </DialogResponsive>
   );

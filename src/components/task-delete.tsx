@@ -1,47 +1,42 @@
 "use client";
 
+import React from "react";
+import type { Row } from "@tanstack/table-core";
+
+import { TrashIcon } from "@/nextjs/assets";
+
 import {
   AlertDialogResponsive,
-  AlertDialogResponsiveClose,
-  AlertDialogResponsiveContent,
-  AlertDialogResponsiveDescription,
-  AlertDialogResponsiveFooter,
-  AlertDialogResponsiveHeader,
-  AlertDialogResponsiveTitle,
+  AlertDialogResponsiveTrigger,
 } from "@/nextjs/components/ui/alert-dialog-responsive";
 import { Button } from "@/nextjs/components/ui/button";
+import { DialogResponsive } from "@/nextjs/components/ui/dialog-responsive";
+
+import { TaskAlert } from "@/components/task-alert";
 
 interface DeleteTaskProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
+  selected: Row<any>[];
 }
 
 export function DeleteTask(props: DeleteTaskProps) {
+  const [open, setOpen] = React.useState(false);
+  const count = props.selected.length;
+
   return (
-    <AlertDialogResponsive open={props.open} onOpenChange={props.setOpen}>
-      <AlertDialogResponsiveContent>
-        <AlertDialogResponsiveHeader>
-          <AlertDialogResponsiveTitle>
-            Are you absolutely sure?
-          </AlertDialogResponsiveTitle>
-          <AlertDialogResponsiveDescription>
-            This action cannot be undone. This will permanently delete task from
-            our servers.
-          </AlertDialogResponsiveDescription>
-        </AlertDialogResponsiveHeader>
-        <AlertDialogResponsiveFooter>
-          <AlertDialogResponsiveClose asChild>
-            <Button variant="outline">Cancel</Button>
-          </AlertDialogResponsiveClose>
+    <DialogResponsive>
+      <AlertDialogResponsive>
+        <AlertDialogResponsiveTrigger>
           <Button
-            type="submit"
+            size="sm"
             variant={"destructive"}
-            onClick={() => props.setOpen(false)}
+            onClick={() => setOpen((prev) => !prev)}
           >
-            Delete
+            <TrashIcon className="mr-2 size-4" />
+            <span className="pt-0.5">Delete({count})</span>
           </Button>
-        </AlertDialogResponsiveFooter>
-      </AlertDialogResponsiveContent>
-    </AlertDialogResponsive>
+        </AlertDialogResponsiveTrigger>
+        <TaskAlert open={open} setOpen={setOpen} />
+      </AlertDialogResponsive>
+    </DialogResponsive>
   );
 }
