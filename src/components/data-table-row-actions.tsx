@@ -3,6 +3,11 @@
 import React from "react";
 import { Row } from "@tanstack/react-table";
 
+import {
+  useDeleteTasks,
+  useUpdateTaskPriority,
+  useUpdateTaskStatus,
+} from "@/server/queries/tasks";
 import { EllipsisHorizontalIcon } from "@/nextjs/assets";
 import { cn } from "@/nextjs/lib/utils";
 
@@ -30,7 +35,7 @@ import { TaskAlert } from "@/components/task-alert";
 import { TaskModal } from "@/components/task-modal";
 
 import { priorities, statuses } from "@/data/data";
-import { taskSchema } from "@/data/schema";
+import { Task, taskSchema } from "@/data/schema";
 import { getPriorityColor, getStatusColor } from "@/functions";
 
 interface DataTableRowActionsProps<TData> {
@@ -40,9 +45,18 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const { mutate: deleteTasks } = useDeleteTasks();
+  const { mutate: updateTaskStatus } = useUpdateTaskStatus();
+  const { mutate: updateTaskPriority } = useUpdateTaskPriority();
+
   const task = taskSchema.parse(row.original);
+  const taskId = (row.original as Task).id as string;
   const [openEdit, setOpenEdit] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
+
+  const deleteTasksConfirm = () => {
+    deleteTasks([taskId]);
+  };
 
   return (
     <DialogResponsive open={openEdit} onOpenChange={setOpenEdit}>
@@ -68,7 +82,13 @@ export function DataTableRowActions<TData>({
               <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup value={task.status}>
                   {statuses.map((item) => (
-                    <DropdownMenuRadioItem key={item.label} value={item.value}>
+                    <DropdownMenuRadioItem
+                      key={item.label}
+                      value={item.value}
+                      onClick={() => {
+                        updateTaskStatus({ taskId: taskId, data: item.value });
+                      }}
+                    >
                       <div className="flex w-[100px] items-center">
                         {item.icon && (
                           <item.icon
@@ -90,7 +110,16 @@ export function DataTableRowActions<TData>({
               <DropdownMenuSubContent>
                 <DropdownMenuRadioGroup value={task.priority}>
                   {priorities.map((item) => (
-                    <DropdownMenuRadioItem key={item.label} value={item.value}>
+                    <DropdownMenuRadioItem
+                      key={item.label}
+                      value={item.value}
+                      onClick={() => {
+                        updateTaskPriority({
+                          taskId: taskId,
+                          data: item.value,
+                        });
+                      }}
+                    >
                       <div className="flex w-[100px] items-center">
                         {item.icon && (
                           <item.icon
@@ -116,7 +145,11 @@ export function DataTableRowActions<TData>({
           </DropdownMenuContent>
         </DropdownMenu>
         <TaskModal task={task} setOpen={setOpenEdit} />
-        <TaskAlert open={openDelete} setOpen={setOpenDelete} />
+        <TaskAlert
+          open={openDelete}
+          setOpen={setOpenDelete}
+          onConfirm={deleteTasksConfirm}
+        />
       </AlertDialog>
     </DialogResponsive>
   );

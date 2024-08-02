@@ -14,6 +14,7 @@ import { Button } from "@/nextjs/components/ui/button";
 interface DeleteTaskProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  onConfirm: () => any;
 }
 
 export function TaskAlert(props: DeleteTaskProps) {
@@ -38,7 +39,10 @@ export function TaskAlert(props: DeleteTaskProps) {
           <Button
             type="submit"
             variant={"destructive"}
-            onClick={() => props.setOpen(false)}
+            onClick={() => {
+              props.onConfirm();
+              props.setOpen(false);
+            }}
           >
             Delete
           </Button>

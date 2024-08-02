@@ -3,6 +3,7 @@
 import React from "react";
 import type { Row } from "@tanstack/table-core";
 
+import { useDeleteTasks } from "@/server/queries/tasks";
 import { TrashIcon } from "@/nextjs/assets";
 
 import {
@@ -14,13 +15,23 @@ import { DialogResponsive } from "@/nextjs/components/ui/dialog-responsive";
 
 import { TaskAlert } from "@/components/task-alert";
 
+import { Task } from "@/data/schema";
+
 interface DeleteTaskProps {
   selected: Row<any>[];
 }
 
 export function DeleteTask(props: DeleteTaskProps) {
-  const [open, setOpen] = React.useState(false);
   const count = props.selected.length;
+  const { mutate } = useDeleteTasks();
+  const [open, setOpen] = React.useState(false);
+
+  const deleteTasksOnConfirm = () => {
+    const taskIds = props.selected.map(
+      (task) => (task.original as Task).id as string,
+    );
+    mutate(taskIds);
+  };
 
   return (
     <DialogResponsive>
@@ -35,7 +46,11 @@ export function DeleteTask(props: DeleteTaskProps) {
             <span className="pt-0.5">Delete({count})</span>
           </Button>
         </AlertDialogResponsiveTrigger>
-        <TaskAlert open={open} setOpen={setOpen} />
+        <TaskAlert
+          open={open}
+          setOpen={setOpen}
+          onConfirm={deleteTasksOnConfirm}
+        />
       </AlertDialogResponsive>
     </DialogResponsive>
   );

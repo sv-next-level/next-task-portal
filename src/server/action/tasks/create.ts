@@ -19,12 +19,7 @@ export async function createTask(data: Task) {
     });
 
     const res = response.data;
-
-    if (res.error) {
-      throw res.error;
-    }
-
-    return res.data;
+    return res;
   } catch (error: any) {
     if ("error" in error) {
       throw new Error(error.error);

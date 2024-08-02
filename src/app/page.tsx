@@ -1,5 +1,3 @@
-"use server";
-
 import { QueryClient } from "@tanstack/react-query";
 
 import { getTasks } from "@/server/action";

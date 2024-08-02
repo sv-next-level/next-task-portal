@@ -1,9 +1,12 @@
+"use client";
+
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { useCreateTasks, useUpdateTasks } from "@/server/queries/tasks";
 import { CalendarIcon } from "@/nextjs/assets";
 import { cn } from "@/nextjs/lib/utils";
 
@@ -53,13 +56,16 @@ interface TaskModalProps {
 }
 
 export function TaskModal(props: TaskModalProps) {
+  const { mutate: createTask } = useCreateTasks();
+  const { mutate: updateTask } = useUpdateTasks();
+
   const form = useForm<z.infer<typeof taskSchema>>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
-      title: props.task?.title,
-      priority: props.task?.priority,
-      description: props.task?.description,
-      due: props.task?.due ? new Date(props.task.due).getTime() : undefined,
+      title: props.task?.title ?? "",
+      priority: props.task?.priority ?? "",
+      description: props.task?.description ?? "",
+      due: props.task?.due ? new Date(props.task.due).getTime() : 0,
     },
   });
 
@@ -72,7 +78,12 @@ export function TaskModal(props: TaskModalProps) {
       due: new Date(values.due).getTime(),
     };
 
-    console.log("🚀 ~ onSubmit ~ task:", task);
+    if (task?.id) {
+      updateTask({ taskId: task.id, data: task });
+    } else {
+      createTask(task);
+    }
+    form.control._reset();
     props.setOpen(false);
   };
 

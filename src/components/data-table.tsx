@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useQuery } from "@tanstack/react-query";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -17,7 +16,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 
-import { getTasks } from "@/server/action";
+import { useReadTasks } from "@/server/queries/tasks";
 
 import {
   Table,
@@ -31,7 +30,6 @@ import {
 import { DataTablePagination } from "@/nextjs/components/data-table/data-table-pagination";
 
 import { Task } from "@/data/schema";
-import { tasks } from "@/data/tasks";
 
 interface DataTableProps {
   columns: ColumnDef<Task>[];
@@ -44,11 +42,7 @@ export function DataTable({
   DataTableToolbar,
   pageSizes = [10, 20, 30, 40, 50],
 }: DataTableProps) {
-  const { data } = useQuery({
-    queryKey: ["tasks"],
-    queryFn: getTasks,
-    initialData: tasks,
-  });
+  const { data } = useReadTasks();
 
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =

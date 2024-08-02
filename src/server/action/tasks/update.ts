@@ -5,8 +5,9 @@ import { axiosGenericRequest } from "@/nextjs/server/client";
 import { API } from "@/common/api/next-task-service";
 
 import { Task } from "@/data/schema";
+import { PRIORITIES, STATUS } from "@/functions";
 
-export async function updateTask(taskId: string, data: Task) {
+export async function updateTask(taskId: string, data: Task): Promise<Task> {
   try {
     const route = API.v1.tasks.taskId.data;
     const url: string = route.getPath(taskId);
@@ -19,12 +20,7 @@ export async function updateTask(taskId: string, data: Task) {
     });
 
     const res = response.data;
-
-    if (res.error) {
-      throw res.error;
-    }
-
-    return res.data;
+    return res;
   } catch (error: any) {
     if ("error" in error) {
       throw new Error(error.error);
@@ -33,25 +29,22 @@ export async function updateTask(taskId: string, data: Task) {
   }
 }
 
-export async function updateTaskStatus(taskId: string, data: Task) {
+export async function updateTaskStatus(taskId: string, data: STATUS) {
   try {
-    const route = API.v1.tasks.taskId.data;
+    const route = API.v1.tasks.taskId.status.data;
     const url: string = route.getPath(taskId);
     const method: string = route.method.PATCH;
 
     const response = await axiosGenericRequest({
       url: url,
-      data: data,
+      data: {
+        status: data,
+      },
       method: method,
     });
 
     const res = response.data;
-
-    if (res.error) {
-      throw res.error;
-    }
-
-    return res.data;
+    return res;
   } catch (error: any) {
     if ("error" in error) {
       throw new Error(error.error);
@@ -60,25 +53,22 @@ export async function updateTaskStatus(taskId: string, data: Task) {
   }
 }
 
-export async function updateTaskPriority(taskId: string, data: Task) {
+export async function updateTaskPriority(taskId: string, data: PRIORITIES) {
   try {
-    const route = API.v1.tasks.taskId.data;
+    const route = API.v1.tasks.taskId.priority.data;
     const url: string = route.getPath(taskId);
     const method: string = route.method.PATCH;
 
     const response = await axiosGenericRequest({
       url: url,
-      data: data,
+      data: {
+        priority: data,
+      },
       method: method,
     });
 
     const res = response.data;
-
-    if (res.error) {
-      throw res.error;
-    }
-
-    return res.data;
+    return res;
   } catch (error: any) {
     if ("error" in error) {
       throw new Error(error.error);
